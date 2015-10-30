@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>서명 만들어볼까? </title>
+    <style>
+        p, span, div {
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            padding: 10px 20px;
+            margin: 0;
+            font-size: 12px
+        }
+
+        .wrap_list {
+            padding: 15px;
+            border: 1px solid #ccc
+        }
+
+        .txt_jabsori {
+            font-weight: normal;
+            font-size: .8em;
+            color: #888
+        }
+
+        #list li {
+            margin-top: 10px
+        }
+
+        #list strong {
+            text-transform: capitalize
+        }
+
+        #txtArea {
+            width: 100%
+        }
+
+        #form fieldset {
+            border: 1px solid #ccc
+        }
+
+        #form fieldset + fieldset {
+            margin-top: 15px
+        }
+
+        #form .fld_choice {
+            margin-top: 10px
+        }
+
+        #form .fld_choice label + label {
+            margin-left: 15px
+        }
+
+        #form .fld_info input {
+            margin-left: 5px
+        }
+
+        #form .fld_info label {
+            display: inline-block;
+            width: 30%;
+            padding: 10px
+        }
+
+        .wrap_btn {
+            display: block;
+            padding: 10px 0;
+            text-align: center
+        }
+
+        .wrap_btn input {
+            width: 300px;
+            font-size: 20px
+        }
+
+        #btnReset {
+            width: 150px
+        }
+
+        footer {
+            display: block;
+            text-align: right;
+            padding: 10px 0
+        }
+
+        footer em {
+            display: block
+        }
+    </style>
+    <script src="http://s1.daumcdn.net/svc/original/U03/cssjs/jquery/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript"
+            src="http://m1.daumcdn.net/svc/original/U03/cssjs/underscore/underscore-1.7.0.min.js"></script>
+</head>
+<body>
+<h1>잽싸게 은지님 작업 포크 떠서 작성-!</h1>
+
+<div class="wrap_list">
+    <strong>비슷비슷하지만 디자인 미리보기 </strong>
+    <ol id="list">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ol>
+</div>
+<form id="form">
+    <fieldset class="fld_choice">
+        <legend>디자인 선택</legend>
+        <label><input type="radio" name="design" value="0" checked> 1번</label>
+        <label><input type="radio" name="design" value="1"> 2번(명함)</label>
+        <label><input type="radio" name="design" value="2"> 3번</label>
+        <label><input type="radio" name="design" value="3"> 4번 (색안변함)</label>
+        <label><input type="radio" name="design" value="4"> 5번 (추가)</label>
+    </fieldset>
+    <fieldset class="fld_info">
+        <legend>내정보 입력</legend>
+        <label>ID <input type="text" id="inpDaumin" placeholder="gd.hong"></label> <label>이름 <input type="text"
+                                                                                                    id="inpHname"
+                                                                                                    placeholder="홍길동"></label>
+        <label>영어이름 <input type="text" id="inpEname" placeholder="gd.hong"></label> <label>대소속(센터) <input type="text"
+                                                                                                          id="inpCenter"
+                                                                                                          placeholder="개발Unit"></label>
+        <label>소속(팀,파트) <input type="text" id="inpTeam" placeholder="공통플랫폼파트"></label> <label>자리 번호 <input type="text"
+                                                                                                           id="inpTel"
+                                                                                                           placeholder="+82-64-000-0000"></label>
+        <label>폰 번호 <input type="text" id="inpMtel"
+                           placeholder="+82-10-0000-0000"></label> <label>컬러 <input type="color" id="inpColor"
+                                                                                    value="#555555"></label>
+    </fieldset>
+    <fieldset class="fld_choice fld_com">
+        <legend>주소 선택</legend>
+        <label><input type="radio" name="company" value="0" checked> 다음서비스 제주(오등동)</label>
+        <label><input type="radio" name="company" value="1"> 다음서비스 서울(가산)</label>
+        <label><input type="radio" name="company" value="2"> 다음카카오 스페이스.1</label>
+        <label><input type="radio" name="company" value="3"> 다음카카오 스페이스.2</label>
+        <label><input type="radio" name="company" value="4"> 다음카카오 판교N동</label>
+        <label><input type="radio" name="company" value="5"> 다음카카오 판교S동</label>
+    </fieldset>
+    <div class="wrap_btn">
+        <input type="button" id="btnShow" value="소스보기">
+        <input type="button" id="btnReset" value="초기화">
+    </div>
+    <textarea id="txtArea" rows="15"></textarea>
+
+    <p>
+        ※ 위 내용을 복사해서 메일
+        <a href="http://hmstage.daum.net/hanmailex/env/Signature.daum" target="_blank">환경설정 > 서명설정 > 서명추가하기</a>
+        에 저장하여 사용가능합니다.
+    </p>
+</form>
+<footer>
+    <p>
+        <em>by. 웹표준개발1팀 Amy(김은지)</em>
+        contact. <a href="http://hmstage.daum.net/hanmail/mail/MailComposeFrame.daum?TO=romoon@daumcorp.com"
+                    target="_blank"> romoon@daumcorp.com</a>
+    </p>
+
+    <p style="padding-top: 10px;">
+        <em>fork. 운영플랫폼개발팀 jacob(황유현)</em>
+        contact. <a href="http://hmstage.daum.net/hanmail/mail/MailComposeFrame.daum?TO=jacob.c@daumkakao.com"
+                    target="_blank"> jacob.c@daumkakao.com</a>
+    </p>
+    <hr>
+    <p style="padding-top: 10px;">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/kr/"><img alt="크리에이티브 커먼즈 라이선스" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/2.0/kr/88x31.png" /></a><br />이 저작물은 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/kr/">크리에이티브 커먼즈 저작자표시-비영리-동일조건변경허락 2.0 대한민국 라이선스</a>에 따라 이용할 수 있습니다.
+    </p>
+</footer>
+
+<script type="text/template" id="tempType1">
+    <div style="border:4px solid <%= themeColor %>">
+	<span style="display: block; padding: 10px 15px">
+		<strong style="font-size: 18px; font-family: tahoma; color: <%= themeColor %>"><%= Ename %></strong> &nbsp; &nbsp;
+		<span style="font-size: 12px; color: #888"><%= Hname %></span>
+		<span style="float: right; padding-left: 50px; font-size: 18px; font-weight: bold; color: <%= themeColor %>"><%= Ecom1 %></span>
+	</span>
+	<span style="display: block; margin: 0 15px 10px; padding-top: 10px; border-top: 1px solid #eee; font-size: 11px; line-height: 18px; font-family: tahoma; color: #666">
+		<%= Hcom %> / <%= center %> / <%= team %><br> <strong style="color: <%= themeColor %>">TEL</strong> <%= tel %> &nbsp;&nbsp; <strong
+            style="color: <%= themeColor %>">MOBILE</strong> <%= mtel %><br> <strong style="color: <%= themeColor %>">E-MAIL</strong>
+		<a style="color: #666; text-decoration: none"
+           href="http://hmstage.daum.net/hanmail/mail/MailComposeFrame.daum?TO=<%= dauminId %>@<%= mailAddr %>"
+           target="_blank"><%= dauminId %>@<%= mailAddr %></a>
+		&nbsp;&nbsp; <strong style="color: <%= themeColor %>">ADDR</strong> <%= address %>
+	</span>
+    </div>
+</script>
+
+<script type="text/template" id="tempType2">
+    <span style="display: block; width: 380px; border: 4px solid <%= themeColor %>;border-bottom:1px solid <%= themeColor %>">
+	<span style="display: block; padding: 10px 15px">
+		<strong style="font-size: 18px; font-family: tahoma; color: <%= themeColor %>"><%= Ename %></strong> &nbsp; &nbsp;
+		<span style="font-size: 12px; color: #888"><%= Hname %></span>
+	</span>
+	<span style="display: block; margin: 0 15px 10px; padding-top: 10px; border-top: 1px solid #eee; font-size: 11px; line-height: 18px; font-family: tahoma; color: #666">
+		<%= Hcom %> / <%= center %> / <%= team %><br> <strong style="color: <%= themeColor %>">T</strong> <%= tel %><br> <strong
+            style="color: <%= themeColor %>">M</strong> <%= mtel %><br> <strong
+            style="color: <%= themeColor %>">E</strong>
+		<a style="color: #666; text-decoration: none"
+           href="http://hmstage.daum.net/hanmail/mail/MailComposeFrame.daum?TO=<%= dauminId %>@<%= mailAddr %>"
+           target="_blank"><%= dauminId %>@<%= mailAddr %></a>
+		<br> <strong style="color: <%= themeColor %>">A</strong> <%= address %>
+	</span>
+	<span style="display: block; padding: 2px; text-align: right; font-size: 10px; letter-spacing: 4px; font-family: helvetica; color: #fff; background-color: <%= themeColor %>"><%= Ecom2 %></span>
+</span>
+</script>
+
+<script type="text/template" id="tempType3">
+    <div style="border: 4px solid <%= themeColor %>;border-bottom:1px solid <%= themeColor %>">
+	<span style="display: block; width: 100%;">
+		<span style="display: block; padding: 10px 15px">
+			<strong style="font-size: 18px; font-family: tahoma; color: <%= themeColor %>"><%= Ename %></strong> &nbsp; &nbsp;
+			<span style="font-size: 12px; color: #888"><%= Hname %></span>
+		</span>
+		<span style="display: block; margin: 0 15px 10px; padding-top: 10px; border-top: 1px solid #eee; font-size: 11px; line-height: 18px; font-family: tahoma; color: #666">
+			<%= Hcom %> / <%= center %> / <%= team %><br> <strong style="color: <%= themeColor %>">T</strong> <%= tel %> &nbsp;&nbsp;  <strong
+                style="color: <%= themeColor %>">M</strong> <%= mtel %><br> <strong
+                style="color: <%= themeColor %>">E</strong>
+			<a style="color: #666; text-decoration: none"
+               href="http://hmstage.daum.net/hanmail/mail/MailComposeFrame.daum?TO=<%= dauminId %>@<%= mailAddr %>"
+               target="_blank"><%= dauminId %>@<%= mailAddr %></a>
+			&nbsp;&nbsp; <strong style="color: <%= themeColor %>">A</strong> <%= address %>
+		</span>
+		<span style="display: block; padding-top: 2px;text-align: right; font-size: 10px; letter-spacing: 4px; font-family: helvetica; color: #fff; background-color: <%= themeColor %>"><%= Ecom2 %></span>
+	</span>
+    </div>
+</script>
+
+<script type="text/template" id="tempType4">
+    <div style="border: 4px solid #333">
+	<span style="display: block; padding: 10px 13px 10px 15px">
+		<strong style="font-size: 18px; font-family: tahoma; color: #333333"><%= Ename %></strong> &nbsp; &nbsp;
+		<span style="font-size: 12px; color: #888"><%= Hname %></span>
+		<span style="float: right; padding-left: 50px; font-size: 18px; font-weight: bold; color: #333333"><img
+                border="0" alt="Daum" src="http://www.daumkakao.com/images/pc/img_logo.gif" width="110"
+                height="20"></span>
+	</span>
+	<span style="display: block; margin: 0 15px 10px; padding-top: 10px; border-top: 1px solid #eee; font-size: 11px; line-height: 18px; font-family: tahoma; color: #666">
+		다음카카오 / <%= center %> / <%= team %><br> <strong style="color: #555">TEL</strong> <%= tel %> &nbsp;&nbsp;<strong
+            style="color: #555">MOBILE</strong> <%= mtel %><br> <strong style="color: #555">E-MAIL</strong>
+		<a style="color: #666; text-decoration: none"
+           href="http://hmstage.daum.net/hanmail/mail/MailComposeFrame.daum?TO=<%= dauminId %>@daumkakao.com"
+           target="_blank"><%= dauminId %>@daumkakao.com</a>
+		&nbsp;&nbsp; <strong style="color: #555">ADDR</strong> <%= address %>
+	</span>
+    </div>
+</script>
+
+<script type="text/template" id="tempType5">
+    <div style="border:4px solid <%= themeColor %>">
+	<span style="display: block; width: 100%;">
+        <span style="display: block; padding: 10px 15px">
+            <strong style="font-size: 18px; font-family: tahoma; color: <%= themeColor %>"><%= Ename %></strong> &nbsp; &nbsp;
+            <span style="font-size: 14px; color: #888"><%= Hname %></span>
+        </span>
+        <span style="display: block; margin: 0 15px 10px; padding-top: 10px; border-top: 1px solid #eee; font-size: 11px; line-height: 18px; font-family: tahoma; color: #666">
+            <span style="float: right; display:block; background:url(https://i1.daumcdn.net/image.hope/etc/dk/techin/tit_daumin.gif)no-repeat; width:245px; height:44px;">&nbsp;</span>
+            <span><%= Hcom %> / <%= center %> / <%= team %></span>
+            <br>
+            <strong style="color: <%= themeColor %>">TEL</strong><span>&nbsp;<%= tel %>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <strong style="color: <%= themeColor %>">MOBILE</strong><span>&nbsp;<%= mtel %></span>
+            <br>
+            <strong style="color: <%= themeColor %>">E-MAIL</strong><span>&nbsp;<a
+                style="color: #666; text-decoration: none"
+                href="http://hmstage.daum.net/hanmail/mail/MailComposeFrame.daum?TO=<%= dauminId %>@daumkakao.com"
+                target="emptyframe"><%= dauminId %>@daumkakao.com</a>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <strong style="color: <%= themeColor %>">ADDR</strong><span>&nbsp;<%= address %></span>
+        </span>
+    </span>
+    </div>
+</script>
+
+<script type="text/javascript">
+
+    // 초기값 (내신상 탈탈탈..)
+    var userInfo = {
+        Hname: '홍길동',
+        Ename: 'gd.hong',
+        center: '개발Unit',
+        team: '공통플랫폼개발파트',
+        tel: '+82-64-000-0000',
+        mtel: '+82-10-0000-0000',
+        dauminId: 'gd.hong',
+        themeColor: '#444444',
+        address: '제주특별자치도 제주시 오등동 1730-8 Daum GMC',
+        Hcom: 'dk techin',
+        Ecom1: 'dk techin',
+        Ecom2: 'dk techin',
+        mailAddr: 'daumkakao.com'
+    };
+
+    // 입력했던적이 있으면 기존정보(초기에서 색만건드린경우는 적용 ㄴㄴ)
+    if (localStorage.Hname) {
+        userInfo = {
+            Hname: localStorage.Hname,
+            Ename: localStorage.Ename,
+            center: localStorage.center,
+            team: localStorage.team,
+            tel: localStorage.tel,
+            mtel: localStorage.mtel,
+            dauminId: localStorage.dauminId,
+            themeColor: localStorage.themeColor,
+            address: localStorage.address,
+            Hcom: localStorage.Hcom,
+            Ecom1: localStorage.Ecom1,
+            Ecom2: localStorage.Ecom2,
+            mailAddr: localStorage.mailAddr
+        };
+        $('#inpHname').val(localStorage.Hname);
+        $('#inpEname').val(localStorage.Ename);
+        $('#inpCenter').val(localStorage.center);
+        $('#inpTeam').val(localStorage.team);
+        $('#inpDaumin').val(localStorage.dauminId);
+        $('#inpTel').val(localStorage.tel);
+        $('#inpMtel').val(localStorage.mtel);
+        $('#inpColor').val(localStorage.themeColor);
+    }
+    ;
+
+    // 주소 라디오버튼 부분
+    if (localStorage.address) {
+        var val = localStorage.addressVal;
+        userInfo.address = localStorage.address;
+        $('.fld_com input').eq(val).attr('checked', 'checked');
+    }
+    ;
+
+    // 템플릿 뿌리기
+    var viewTemp = function (num) {
+        var el = '#tempType' + num;
+        var tempType = _.template(jQuery(el).html());
+        jQuery('#list li').eq(num - 1).html(tempType(userInfo));
+    };
+
+    var showTemp = function () {
+        jQuery('#list li').each(function (i) {
+            viewTemp(i + 1);
+        });
+    };
+    // 소스보기 버튼
+    $('#btnShow').click(function () {
+        var t = $('input:radio[name=design]:checked').val();
+        var src = $('li').eq(t).html();
+        $('#txtArea').val(src);
+    });
+
+    //초기화 버튼
+    $('#btnReset').click(function () {
+        localStorage.clear();
+        window.location.reload();
+    });
+
+    // 폼 내용 변환
+    $('#form .fld_info input').keyup(function () {
+        userInfo = {
+            Hname: $('#inpHname').val() == '' ? userInfo.Hname : $('#inpHname').val(),
+            Ename: $('#inpEname').val() == '' ? userInfo.Ename : $('#inpEname').val(),
+            center: $('#inpCenter').val() == '' ? userInfo.center : $('#inpCenter').val(),
+            team: $('#inpTeam').val() == '' ? userInfo.team : $('#inpTeam').val(),
+            tel: $('#inpTel').val(),
+            mtel: $('#inpMtel').val(),
+            dauminId: $('#inpDaumin').val() == '' ? userInfo.dauminId : $('#inpDaumin').val(),
+            themeColor: userInfo.themeColor,
+            address: userInfo.address,
+            Hcom: userInfo.Hcom,
+            Ecom1: userInfo.Ecom1,
+            Ecom2: userInfo.Ecom2,
+            mailAddr: userInfo.mailAddr
+        };
+        _.each(userInfo, function (val, key) {
+            localStorage.setItem(key, val);
+        });
+        showTemp();
+    });
+
+    // 컬러
+    $('#inpColor').change(function () {
+        userInfo.themeColor = $('#inpColor').val();
+        localStorage.setItem('themeColor', userInfo.themeColor);
+        showTemp();
+    });
+
+    // 주소 변환
+    $('input:radio[name=company]').click(function () {
+        var a = $('input:radio[name=company]:checked').val();
+        if (a < 2) { // dk techin
+            userInfo.Hcom = 'dk techin';
+            userInfo.Ecom1 = 'dk techin';
+            userInfo.Ecom2 = 'dk techin';
+        } else { // 다음카카오
+            userInfo.Hcom = '다음카카오';
+            userInfo.Ecom1 = 'daumkakao';
+            userInfo.Ecom2 = 'DAUMKAKAO';
+        }
+        ;
+        switch (a) {
+            case '0':
+                userInfo.address = '제주특별자치도 제주시 오등동 1730-8 Daum GMC';
+                break;
+            case '1':
+                userInfo.address = '서울특별시 금천구 가산디지털1로 186 6층 다음서비스';
+                break;
+            case '2':
+                userInfo.address = '제주특별자치도 제주시 첨단로 242 space.1 daumkakao';
+                break;
+            case '3':
+                userInfo.address = '제주특별자치도 제주시 첨단로 216-19 space.2 daumkakao';
+                break;
+            case '4':
+                userInfo.address = '경기도 성남시 분당구 판교역로 235 에이치스퀘어 N동 7층 daumkakao';
+                break;
+            case '5':
+                userInfo.address = '경기도 성남시 분당구 판교역로 231 에이치스퀘어 S동 6층 daumkakao';
+                break;
+        }
+        localStorage.setItem('address', userInfo.address);
+        localStorage.setItem('Hcom', userInfo.Hcom);
+        localStorage.setItem('Ecom1', userInfo.Ecom1);
+        localStorage.setItem('Ecom2', userInfo.Ecom2);
+        localStorage.setItem('addressVal', a);
+        showTemp();
+    });
+    showTemp();
+</script>
+</body>
+</html>
