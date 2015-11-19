@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Jacob.c - Static Markdown To HTML Note" />
+    <title>Jacob.c - Static Markdown To HTML Note</title>
+  </head>
+<body>
+<textarea id="md_content" theme="United" style="display:none;">
+20151118_node_web_build_1
+-----
+
+npm > express 를 설치했다.
+```bash
+$ npm install express -e
+```
+adminLTE 소스압축본을 받았다.
+압푹을 풀자마자 한숨이 나온다. 이걸 언제 js, css, font 파일을 각 폴더로 옮기지…?
+걱정을 제껴두고 있단 다음 단계 시작해보았다.
+
+새로 만들 어플리케이션은 내부망 전용으로 개발되어야 하고 방화벽 처리 등등으로 외부 리소스에 대한 접근이 엄격하게 규제된다.
+그래서 훌륭한 구글웹폰트API는 딴나라 얘기…
+결국 내부망 CDN에서 서비스하는것으로 하려면 직접 폰트를 받아야 한다. 아 귀찮다.
+
+adminLTE 테마는 한국을 겨냥해서 만들지 않았기 때문에… 한글 사용을 위해 웹폰트를 변경해주는 작업이 필요하겠다.
+'나눔고딕'을 사용하기로 했다. (이미 사내에선 이것저것 다 버무려서 잘 쓰고 있더라 그래서 나도 썼었다 ㅎㅎ 그리고 또 쓴다. 이정도면 애용자인데..;;)
+
+나눔고딕을 받았다. [google font api](http://fonts.googleapis.com/earlyaccess/nanumgothic.css) <- 여기 올려져 있는 폰트 죄다 받아서 @font-face로 등록해버렸다 :)
+(폰트를 보다보니 폰트 호출 url파라미터로 '#iefix’라는걸 발견했는데 뭔가 싶어서 찾아보니 'IE6-8 대응 꼼수 쿼리'란다. 나도 모르게 꼼수 추가! ㅎㅎ)
+
+이제 한땀 한땀 js, css, font를 정해진 위치에 옮겨주고 경로수정이 필요한 부분들을 수정해주었다.
+(예전부터 생각한건데 참 쉬운건데 오래걸린다... 희안하다..)
+
+이제 본격적으로 express를 주물러 볼차례인듯 하다.
+node express 구성대로 index.ejs 를 루트로 라우팅하고 adminLTE 예제 페이지인 blank 페이지의 내용을 가져다 심어보았다.
+(역시 이 테마는 정겹고 익숙하다 ㅎㅎ)
+예전엔 jquery 로 화면구성을 꾸리면서 뭔가 인터렉티브하지 않아서 아쉬웠었는는데
+이제는 angulerjs 를 도입해서 써보기로 했다. (기대된다.)
+
+
+<hr/>
+<a href="mailto:ghkddbguse@gmail.com">Jacob.c Email</a>
+</textarea>
+<script type="text/javascript">
+  var themeArr = [
+    'Cerulean',
+    'Cyborg',
+    'Journal',
+    'Readable',
+    'Simplex',
+    'Slate',
+    'Spacelab',
+    'Superhero',
+    'United'
+
+    /* 아직 미지원
+    'Cosmo',
+    'Darkly',
+    'Flatly',
+    'Lumen',
+    'Paper',
+    'Sandstone',
+    'Yeti'
+    */
+
+  ];
+  var rd_idx = Math.floor(Math.random() * themeArr.length);
+  var theme_name = themeArr[rd_idx];
+  document.getElementById('md_content').setAttribute('theme', theme_name);
+  document.getElementsByTagName('title')[0].innerHTML = [
+    document.getElementsByTagName('title')[0].innerHTML,
+    ' [',
+    theme_name,
+    '] > ',
+    location.href.substr(location.href.lastIndexOf('/') + 1)
+  ].join('');
+
+</script>
+
+<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
+
+</body>
+</html>
