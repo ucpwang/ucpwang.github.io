@@ -1,0 +1,17 @@
+{
+  "name": "ucpwang.github.io",
+  "homepage": "http://ucpwang.github.io",
+  "authors": [
+    "Jacob(You-Hyun Hwang) <jacob.c​@daumkakao.com>"
+  ],
+  "description": "ucpwang.github.io",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
