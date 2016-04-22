@@ -16,7 +16,7 @@
 
 이를 통해서 맥에서도 경량리눅스서버를 가상화하고 도커 엔진 데몬(이하 도커 머신)을 실행하여 도커 실행 환경을 구축할 수 있음
 
-![boot2docker](http://ucpwang.github.io/images/boot2docker.png)
+![boot2docker](./images/boot2docker.png)
 
 (이때 필요한게 또 하나 있는데 리눅스가상화를 위한 가상화 장비인 virtualBox 임 -> boot2docker에서 참조함)
 
@@ -138,7 +138,7 @@ $ docker-machine ip
 ```
 
 `192.168.99.100:8888` 요청 화면
-![dm-tomcat.png](http://ucpwang.github.io/images/images/dm-tomcat.png)
+![dm-tomcat.png](./images/dm-tomcat.png)
 
 여기까지가 로컬에서 docker를 이용하여 tomcat을 띄워본것임
 
