@@ -41,6 +41,7 @@ Client:
 Cannot connect to the Docker daemon. Is the docker daemon running on this host?
 ```
 `Cannot connect to the Docker daemon. Is the docker daemon running on this host?` 라고 뜨는걸 보니 도커 머신 실행이 필요함
+(혹시 iTerm2 Build 2.9.x 에서 잘안되면 [Mac 에서 iTerm2.app 으로 Docker 하기](https://gist.github.com/ucpwang/ca238b80ee9c5e64567232ffaa7fdd32) 참고)
 
 #### 2-2. Docker Toolbox > Docker Quickstart Terminal 을 통해서 MAC에서 도커 실행 환경을 준비
 ```
