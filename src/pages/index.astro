@@ -1,0 +1,103 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 5);
+---
+
+<BaseLayout title="Jacob.c" description="개발, 기술, 생각을 기록하는 블로그입니다.">
+  <section class="container hero">
+    <h1 class="hero__title">Jacob.c</h1>
+    <p class="hero__desc">개발, 기술, 생각을 기록합니다.</p>
+  </section>
+
+  {
+    posts.length > 0 && (
+      <section class="container posts-section">
+        <h2 class="posts-section__heading">최근 포스트</h2>
+        <ul class="post-list">
+          {posts.map((post) => (
+            <li>
+              <PostCard
+                title={post.data.title}
+                date={post.data.date}
+                description={post.data.description}
+                slug={post.slug}
+                tags={post.data.tags}
+              />
+            </li>
+          ))}
+        </ul>
+        <a href="/blog" class="view-all">모든 포스트 보기 →</a>
+      </section>
+    )
+  }
+
+  {
+    posts.length === 0 && (
+      <section class="container posts-section">
+        <p class="empty-state">아직 작성된 포스트가 없습니다.</p>
+      </section>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-top: var(--space-20);
+    padding-bottom: var(--space-16);
+  }
+
+  .hero__title {
+    font-size: var(--text-5xl);
+    font-weight: var(--font-bold);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--space-4);
+  }
+
+  .hero__desc {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+  }
+
+  .posts-section {
+    padding-bottom: var(--space-24);
+  }
+
+  .posts-section__heading {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-6);
+  }
+
+  .post-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+
+  .view-all {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-brand);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .view-all:hover {
+    color: var(--color-brand-dark);
+  }
+
+  .empty-state {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+</style>

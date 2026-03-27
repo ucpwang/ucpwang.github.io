@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/prose.css';
+---
+
+<BaseLayout title="소개 — Jacob.c" description="Jacob (ucpwang)에 대한 소개 페이지입니다.">
+  <article class="container about">
+    <h1 class="about__title">소개</h1>
+    <div class="prose">
+      <p>안녕하세요, Jacob입니다.</p>
+      <p>
+        개발, 기술, 그리고 생각들을 이곳에 기록합니다.
+        <!--
+          Phase 4에서 내용 작성 예정.
+          자유롭게 수정하세요.
+        -->
+      </p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .about {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-24);
+  }
+
+  .about__title {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-8);
+  }
+</style>

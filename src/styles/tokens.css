@@ -1,0 +1,101 @@
+/*
+ * 디자인 토큰 — CSS Custom Properties
+ *
+ * 이 파일이 모든 CSS 변수 값의 단일 소스입니다.
+ * design-tokens/tokens.json과 동기화를 유지하세요.
+ *
+ * Phase 2에서 브랜드 색상 및 폰트를 사용자와 함께 확정합니다.
+ * TBD 항목은 아직 미결정입니다.
+ */
+
+:root {
+  /* ── Color: Brand (Phase 2에서 확정) ── */
+  --color-brand: #0070f3; /* TBD */
+  --color-brand-light: #3291ff; /* TBD */
+  --color-brand-dark: #0050c8; /* TBD */
+
+  /* ── Color: Gray Scale ── */
+  --color-gray-50: #f9f9f9;
+  --color-gray-100: #f0f0f0;
+  --color-gray-200: #e4e4e4;
+  --color-gray-300: #d1d1d1;
+  --color-gray-400: #a0a0a0;
+  --color-gray-500: #737373;
+  --color-gray-600: #525252;
+  --color-gray-700: #404040;
+  --color-gray-800: #262626;
+  --color-gray-900: #171717;
+
+  /* ── Color: Semantic ── */
+  --color-text-primary: #171717;
+  --color-text-secondary: #404040;
+  --color-text-muted: #737373;
+  --color-bg-base: #ffffff;
+  --color-bg-elevated: #f9f9f9;
+  --color-bg-code: #f0f0f0;
+  --color-border: #e4e4e4;
+  --color-border-strong: #d1d1d1;
+
+  /* ── Typography: Font Family (Phase 2에서 확정) ── */
+  --font-heading: system-ui, sans-serif; /* TBD */
+  --font-body: system-ui, sans-serif; /* TBD */
+  --font-mono: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+
+  /* ── Typography: Size Scale ── */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+
+  /* ── Typography: Weight ── */
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* ── Typography: Line Height ── */
+  --leading-tight: 1.25;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.75;
+
+  /* ── Spacing ── */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* ── Border Radius ── */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* ── Shadow ── */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+
+  /* ── Transition ── */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+
+  /* ── Layout ── */
+  --content-width: 720px;
+  --wide-width: 1100px;
+}

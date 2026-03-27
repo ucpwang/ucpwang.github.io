@@ -1,0 +1,80 @@
+---
+const navLinks = [
+  { href: '/', label: '홈' },
+  { href: '/blog', label: '블로그' },
+  { href: '/about', label: '소개' },
+];
+
+const pathname = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a href="/" class="site-header__logo">Jacob.c</a>
+    <nav class="site-header__nav" aria-label="메인 네비게이션">
+      <ul class="site-header__nav-list">
+        {
+          navLinks.map(({ href, label }) => (
+            <li>
+              <a
+                href={href}
+                class:list={['site-header__nav-link', { 'is-active': pathname === href }]}
+              >
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg-base);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--space-16);
+  }
+
+  .site-header__logo {
+    font-family: var(--font-heading);
+    font-weight: var(--font-bold);
+    font-size: var(--text-xl);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+
+  .site-header__nav-list {
+    display: flex;
+    gap: var(--space-6);
+    list-style: none;
+  }
+
+  .site-header__nav-link {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .site-header__nav-link:hover,
+  .site-header__nav-link.is-active {
+    color: var(--color-text-primary);
+  }
+
+  .site-header__nav-link.is-active {
+    font-weight: var(--font-semibold);
+  }
+</style>

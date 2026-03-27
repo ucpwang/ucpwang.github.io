@@ -1,0 +1,66 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout title="블로그 — Jacob.c" description="Jacob.c의 블로그 포스트 목록입니다.">
+  <section class="container blog-index">
+    <h1 class="blog-index__title">블로그</h1>
+    <p class="blog-index__count">{posts.length}개의 포스트</p>
+
+    {
+      posts.length > 0 ? (
+        <ul class="post-list">
+          {posts.map((post) => (
+            <li>
+              <PostCard
+                title={post.data.title}
+                date={post.data.date}
+                description={post.data.description}
+                slug={post.slug}
+                tags={post.data.tags}
+              />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="empty-state">아직 작성된 포스트가 없습니다.</p>
+      )
+    }
+  </section>
+</BaseLayout>
+
+<style>
+  .blog-index {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-24);
+  }
+
+  .blog-index__title {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-2);
+  }
+
+  .blog-index__count {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-10);
+  }
+
+  .post-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .empty-state {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+</style>

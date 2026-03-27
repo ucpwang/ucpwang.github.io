@@ -1,151 +1,268 @@
 # CLAUDE.md
 
 이 파일은 이 저장소에서 작업하는 AI 어시스턴트를 위한 가이드입니다.
+**반드시 전체를 읽고 작업하세요.** 특히 디자인 토큰 규칙과 컴포넌트 패턴은 절대 원칙입니다.
+
+---
 
 ## 프로젝트 개요
 
-[ucpwang.github.io](http://ucpwang.github.io)에 GitHub Pages로 호스팅되는 개인 블로그 및 포트폴리오 사이트입니다. 사이트는 두 가지 영역으로 구성됩니다:
+[ucpwang.github.io](https://ucpwang.github.io)에 GitHub Pages로 호스팅되는 개인 블로그 사이트입니다.
 
-1. **루트 블로그** — Strapdown.js를 통한 클라이언트 사이드 Markdown 렌더링을 사용하는 정적 HTML 파일
-2. **포트폴리오 사이트** (`jacobs_mac_house/`) — Bootstrap Clean Blog 테마를 사용한 멀티 페이지 포트폴리오
+- **프레임워크**: Astro (정적 사이트 생성)
+- **스타일**: CSS Custom Properties 기반 디자인 시스템 (토큰 우선)
+- **콘텐츠**: Astro Content Collections (Markdown)
+- **배포**: GitHub Actions → GitHub Pages (master 브랜치 push 시 자동 빌드)
+
+---
 
 ## 저장소 구조
 
 ```
 ucpwang.github.io/
-├── index.html                    # 메인 랜딩 페이지 / 블로그 인덱스
-├── README.md                     # 프로젝트 설명 (간략)
-├── bower.json                    # 프론트엔드 의존성 목록
-├── CLAUDE.md                     # 이 파일
-├── images/                       # 블로그 포스트 이미지 (PNG)
-├── js/
-│   ├── clean-blog.js             # 블로그 테마 JS (~1057줄)
-│   └── clean-blog.min.js         # 압축 버전
-├── jacobs_mac_house/             # 포트폴리오 서브디렉토리 (~36 MB)
-│   ├── index.html                # 포트폴리오 랜딩 페이지
-│   ├── about.html                # 소개 페이지
-│   ├── contact.html              # 연락처 페이지
-│   ├── post.html                 # 블로그 포스트 템플릿
-│   ├── css/                      # 컴파일된 CSS (Bootstrap + Clean Blog 테마)
-│   ├── less/                     # LESS 소스 파일
-│   │   ├── clean-blog.less       # 메인 테마 LESS
-│   │   ├── variables.less        # 테마 변수
-│   │   └── mixins.less           # LESS 믹스인
-│   └── ...                       # AdminLTE, GreenSock 등 벤더 라이브러리
-└── 20YYMMDD_topic_name.*         # 블로그 포스트 (.md + .html 쌍)
+├── .claude/
+│   └── settings.json              # Claude Code 권한 + hooks (자동 prettier)
+├── .github/
+│   └── workflows/
+│       └── deploy.yml             # Astro 빌드 → GitHub Pages 배포
+├── src/
+│   ├── components/
+│   │   ├── BaseHead.astro         # <head> 공통 (메타, 폰트, CSS 임포트)
+│   │   ├── Header.astro           # 사이트 헤더 / 네비게이션
+│   │   ├── Footer.astro           # 사이트 푸터
+│   │   ├── PostCard.astro         # 블로그 목록 카드
+│   │   └── Tag.astro              # 포스트 태그
+│   ├── content/
+│   │   ├── config.ts              # Content Collections 스키마
+│   │   └── blog/                  # 블로그 포스트 (.md 파일들)
+│   ├── layouts/
+│   │   ├── BaseLayout.astro       # 공통 레이아웃 (Header + Footer)
+│   │   └── PostLayout.astro       # 블로그 포스트 레이아웃
+│   ├── pages/
+│   │   ├── index.astro            # 홈 (최신 포스트 목록)
+│   │   ├── blog/
+│   │   │   ├── index.astro        # 전체 포스트 목록
+│   │   │   └── [...slug].astro    # 개별 포스트 렌더링
+│   │   └── about.astro            # 소개 페이지
+│   └── styles/
+│       ├── tokens.css             # 디자인 토큰 → CSS 변수 (여기서만 값 정의)
+│       ├── global.css             # 리셋 + 글로벌 타이포그래피
+│       └── prose.css              # 마크다운 본문 스타일
+├── public/
+│   └── images/                    # 정적 이미지
+├── design-tokens/
+│   └── tokens.json                # 디자인 토큰 단일 소스 (tokens.css와 동기화)
+├── archive/                       # 구 Strapdown.js 포스트 (참조용 보존)
+├── astro.config.mjs
+├── package.json
+├── tsconfig.json
+└── .prettierrc
 ```
 
-## 블로그 포스트 규칙
+---
 
-블로그 포스트는 다음 네이밍 규칙을 따릅니다:
+## 디자인 시스템 규칙 (절대 원칙)
 
-```
-YYYYMMDD_주제_부제.md    # Markdown 소스
-YYYYMMDD_주제_부제.html  # 렌더링된 HTML 래퍼
-```
+### 1. 토큰 사용 강제
 
-### 블로그 포스트 동작 방식
+**색상, 간격, 폰트, 그림자를 절대 하드코딩하지 마세요.**
+항상 CSS 변수를 사용합니다:
 
-각 `.html` 파일은 Strapdown.js가 클라이언트 사이드에서 렌더링할 수 있도록 Markdown을 `<textarea>` 요소로 감쌉니다:
+```css
+/* WRONG */
+color: #1a1a1a;
+font-size: 1.125rem;
+margin-top: 24px;
 
-```html
-<!DOCTYPE html>
-<html>
-<head>...</head>
-<body>
-<textarea theme="united">
-# 블로그 포스트 제목
-
-Markdown 내용...
-</textarea>
-<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
-</body>
-</html>
+/* RIGHT */
+color: var(--color-text-primary);
+font-size: var(--text-lg);
+margin-top: var(--space-6);
 ```
 
-`.md` 파일에는 Markdown 원본 내용이 담깁니다.
+### 2. 토큰 참조 순서
 
-**새 블로그 포스트 추가 방법:**
-1. `YYYYMMDD_주제_부제.md` 파일을 Markdown 내용으로 생성
-2. 위 Strapdown.js 템플릿을 사용하여 `YYYYMMDD_주제_부제.html` 파일 생성
-3. `index.html`의 블로그 목록 섹션에 링크 항목 추가
+1. `design-tokens/tokens.json` — 단일 소스 (값 변경 시 여기를 수정)
+2. `src/styles/tokens.css` — CSS 변수로 변환 (tokens.json과 동기화 유지)
+3. 컴포넌트 `.astro` 파일의 `<style>` — 변수만 사용
 
-## 기술 스택
+### 3. 사용 가능한 토큰 목록
 
-| 계층 | 기술 |
-|------|------|
-| 호스팅 | GitHub Pages (정적) |
-| CSS 프레임워크 | Bootstrap 3.3.5 (CDN) |
-| 블로그 테마 | StartBootstrap Clean Blog |
-| CSS 전처리기 | LESS (`jacobs_mac_house/less/` 내 소스) |
-| Markdown 렌더링 | Strapdown.js (CDN, 클라이언트 사이드) |
-| 패키지 매니저 | Bower (프론트엔드 의존성) |
-| 아이콘 | Font Awesome 4.1.0 |
-| 폰트 | Google Fonts (Lora, Open Sans) |
+**Color**
+```
+--color-brand           브랜드 메인 색상
+--color-brand-light     브랜드 밝은 변형
+--color-brand-dark      브랜드 어두운 변형
+--color-text-primary    주 텍스트
+--color-text-secondary  보조 텍스트
+--color-text-muted      흐린 텍스트
+--color-bg-base         기본 배경
+--color-bg-elevated     카드/요소 배경
+--color-bg-code         코드 블록 배경
+--color-border          기본 테두리
+--color-border-strong   강조 테두리
+```
 
-## 스타일 규칙
+**Typography**
+```
+--font-heading          제목용 폰트 패밀리
+--font-body             본문용 폰트 패밀리
+--font-mono             코드/모노스페이스 폰트
+--text-xs  --text-sm  --text-base  --text-lg  --text-xl
+--text-2xl  --text-3xl  --text-4xl
+--font-normal  --font-medium  --font-semibold  --font-bold
+--leading-tight  --leading-normal  --leading-relaxed
+```
 
-- 기본 색상: `#0085a1` (청록색) — 링크 및 강조
-- 본문 텍스트: `#404040` (진한 회색)
-- 본문 폰트: Lora (세리프)
-- 제목 폰트: Open Sans (산세리프)
-- `jacobs_mac_house/css/`의 **컴파일된 CSS를 직접 수정하지 말 것** — 대신 `jacobs_mac_house/less/` 내 LESS 소스를 수정할 것
+**Spacing**
+```
+--space-1   0.25rem    --space-2   0.5rem
+--space-3   0.75rem    --space-4   1rem
+--space-6   1.5rem     --space-8   2rem
+--space-12  3rem       --space-16  4rem
+--space-24  6rem
+```
 
-### 테마 스위처
+**Other**
+```
+--radius-sm  --radius-md  --radius-lg  --radius-full
+--shadow-sm  --shadow-md  --shadow-lg
+--transition-fast  --transition-base  --transition-slow
+```
 
-`index.html`에는 페이지 로드 시 7개의 Bootstrap CDN 테마 중 하나를 무작위로 선택하는 JavaScript 코드가 포함되어 있습니다:
+---
 
-- Cerulean, Cyborg, Journal, Simplex, Slate, Spacelab, United
+## Astro 컴포넌트 패턴
 
-## 개발 워크플로우
+### 컴포넌트 파일 구조
 
-### 루트 레벨 빌드 불필요
+```astro
+---
+// 1. 임포트
+import type { CollectionEntry } from 'astro:content';
 
-루트 레벨 블로그는 별도의 빌드 과정이 없습니다. HTML, CSS, JS 파일이 GitHub Pages에서 직접 서빙됩니다.
+// 2. Props 타입 정의 (항상 명시)
+interface Props {
+  title: string;
+  date: Date;
+  description?: string;
+}
 
-### LESS 컴파일 (포트폴리오 섹션만 해당)
+// 3. Props 구조분해
+const { title, date, description } = Astro.props;
+---
 
-`jacobs_mac_house/` 디렉토리에는 Grunt 기반 빌드가 있습니다 (AdminLTE 2.3.0):
+<!-- 4. 템플릿 -->
+<article class="post-card">
+  <h2>{title}</h2>
+  {description && <p>{description}</p>}
+</article>
+
+<!-- 5. 스타일 (토큰 변수만 사용) -->
+<style>
+  .post-card {
+    background: var(--color-bg-elevated);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+  }
+</style>
+```
+
+### 네이밍 규칙
+
+- 컴포넌트 파일: `PascalCase.astro` (예: `PostCard.astro`)
+- 페이지 파일: `kebab-case.astro` 또는 `[param].astro`
+- CSS 클래스: `kebab-case` (예: `.post-card`, `.site-header`)
+- CSS 변수: `--category-name` 형식 (예: `--color-brand`, `--space-4`)
+
+### 레이아웃 사용
+
+모든 페이지는 반드시 `BaseLayout.astro`를 사용합니다:
+
+```astro
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="페이지 제목" description="페이지 설명">
+  <!-- 콘텐츠 -->
+</BaseLayout>
+```
+
+---
+
+## 블로그 포스트 추가 방법
+
+### 1. 파일 생성
+
+`src/content/blog/YYYY-MM-DD-slug.md` 형식으로 생성:
+
+```markdown
+---
+title: '포스트 제목'
+date: 2026-03-27
+description: '포스트 요약 (카드/OG에 사용됨)'
+tags: ['태그1', '태그2']
+draft: false
+---
+
+본문 내용 (Markdown)
+```
+
+### 2. Content Collections 스키마 (필수 필드)
+
+| 필드 | 타입 | 필수 | 설명 |
+|------|------|------|------|
+| `title` | string | ✅ | 포스트 제목 |
+| `date` | date | ✅ | 발행일 (YYYY-MM-DD) |
+| `description` | string | ✅ | 요약문 |
+| `tags` | string[] | - | 태그 목록 (기본값 `[]`) |
+| `draft` | boolean | - | `true`면 빌드에서 제외 (기본값 `false`) |
+
+### 3. 확인
 
 ```bash
-cd jacobs_mac_house
-npm install     # grunt 및 플러그인 설치
-grunt           # LESS 컴파일, CSS/JS 압축, 이미지 최적화
-grunt watch     # 파일 변경 감지
+npm run dev  # http://localhost:4321/blog 에서 확인
 ```
 
-### 배포
+---
 
-`master` 브랜치에 push하면 GitHub Pages가 자동으로 배포합니다. CI/CD 파이프라인은 없습니다.
+## 개발 명령어
 
 ```bash
-git push origin master
+npm run dev      # 개발 서버 시작 (http://localhost:4321)
+npm run build    # 프로덕션 빌드 → dist/
+npm run preview  # 빌드 결과물 미리보기
+npm run format   # prettier로 전체 파일 포맷
 ```
+
+---
+
+## 배포
+
+**자동 배포**: `master` 브랜치에 push하면 GitHub Actions가 자동으로:
+1. `npm ci` → `npm run build` 실행
+2. `dist/` 디렉토리를 GitHub Pages에 배포
+
+**최초 설정 필요**: GitHub 저장소 Settings → Pages → Source를 "GitHub Actions"로 변경.
+
+빌드 결과물(`dist/`)은 `.gitignore`에 포함되어 있어 커밋하지 않습니다.
+
+---
 
 ## 브랜치 전략
 
-- `master` — 프로덕션 브랜치, GitHub Pages에 자동 배포
-- 기능 브랜치는 `<출처>/설명-접미사` 패턴을 따릅니다 (예: `claude/add-feature-XYZ`, `copilot/설명`)
+- `master` — 프로덕션. push 시 자동 빌드+배포
+- 기능 브랜치: `<출처>/설명-접미사` (예: `claude/add-about-page-XYZ`)
+- 기능 완성 후 PR → master 병합
 
-## 콘텐츠 가이드라인
-
-- 블로그 포스트는 한국어 또는 영어로 작성합니다 (기존 포스트는 한국어)
-- 이미지는 `/images/` 디렉토리에 저장합니다
-- 이미지 크기는 웹에 적합하게 유지합니다 (기존 이미지: 97 KB~363 KB)
-- 꼭 필요한 경우가 아니라면 대용량 바이너리 파일이나 벤더 라이브러리를 커밋하지 않습니다
-
-## 주요 파일 참조
-
-| 파일 | 용도 |
-|------|------|
-| `index.html` | 블로그 인덱스 — 새 포스트 추가 시 반드시 업데이트 |
-| `bower.json` | 프론트엔드 의존성 목록 (Bootstrap, jQuery 등) |
-| `js/clean-blog.js` | 블로그 주요 인터랙션 (네비게이션 바, 스크롤 등) |
-| `jacobs_mac_house/less/variables.less` | 테마 색상/폰트 변수 — 시각적 스타일 변경 시 수정 |
+---
 
 ## 주의 사항
 
-- `jacobs_mac_house/` 내 벤더 디렉토리(`AdminLTE/`, `startbootstrap-clean-blog-gh-pages/` 등)의 파일을 수정하지 말 것
-- 기능 개발 시 `master`에 직접 push하지 말고 기능 브랜치를 사용할 것
-- `node_modules/`나 `bower_components/`는 저장소에 추가하지 말 것 (gitignore에 등록됨)
-- `jacobs_mac_house/` 디렉토리는 ~36 MB이므로 대용량 에셋 추가를 지양할 것
+- `design-tokens/tokens.json`을 수정할 때는 `src/styles/tokens.css`도 동기화
+- `src/styles/tokens.css`에서만 CSS 변수 값을 정의 — 다른 파일에서 값 정의 금지
+- `public/` 디렉토리는 그대로 서빙됨 (빌드 과정 없음)
+- `archive/` 디렉토리는 구 포스트 보존용 — 수정하지 말 것
+- `jacobs_mac_house/` 디렉토리는 구 포트폴리오 — 건드리지 말 것
+- `node_modules/`, `dist/`, `bower_components/`는 gitignore됨 — 커밋하지 말 것
