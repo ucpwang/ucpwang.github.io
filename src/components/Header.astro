@@ -62,16 +62,34 @@ const pathname = Astro.url.pathname;
   }
 
   .site-header__nav-link {
+    position: relative;
     font-size: var(--text-sm);
     font-weight: var(--font-medium);
     color: var(--color-text-secondary);
     text-decoration: none;
     transition: color var(--transition-fast);
+    padding-bottom: 2px;
+  }
+
+  .site-header__nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 1px;
+    background: var(--color-brand);
+    transition: width var(--transition-base);
   }
 
   .site-header__nav-link:hover,
   .site-header__nav-link.is-active {
     color: var(--color-text-primary);
+  }
+
+  .site-header__nav-link:hover::after,
+  .site-header__nav-link.is-active::after {
+    width: 100%;
   }
 
   .site-header__nav-link.is-active {
