@@ -77,4 +77,19 @@ const pathname = Astro.url.pathname;
   .site-header__nav-link.is-active {
     font-weight: var(--font-semibold);
   }
+
+  @media (max-width: 480px) {
+    .site-header__inner {
+      height: auto;
+      padding-top: var(--space-4);
+      padding-bottom: var(--space-4);
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-3);
+    }
+
+    .site-header__nav-list {
+      gap: var(--space-4);
+    }
+  }
 </style>

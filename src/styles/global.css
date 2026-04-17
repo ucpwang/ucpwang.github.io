@@ -94,3 +94,14 @@ pre code {
 .container--wide {
   max-width: var(--wide-width);
 }
+
+/* ── 모바일 반응형 ─────────────────────────────── */
+@media (max-width: 640px) {
+  html {
+    font-size: 15px;
+  }
+
+  .container {
+    padding-inline: var(--space-4);
+  }
+}

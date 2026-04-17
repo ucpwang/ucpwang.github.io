@@ -31,7 +31,9 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
             </li>
           ))}
         </ul>
-        <a href="/blog" class="view-all">모든 포스트 보기 →</a>
+        <a href="/blog" class="view-all">
+          모든 포스트 보기 →
+        </a>
       </section>
     )
   }
@@ -99,5 +101,16 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .empty-state {
     color: var(--color-text-muted);
     font-size: var(--text-sm);
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      padding-top: var(--space-12);
+      padding-bottom: var(--space-10);
+    }
+
+    .hero__title {
+      font-size: var(--text-4xl);
+    }
   }
 </style>

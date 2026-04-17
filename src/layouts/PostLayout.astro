@@ -178,4 +178,18 @@ const readingTime = Math.max(1, Math.ceil(wordCount / 200));
     color: var(--color-text-primary);
     gap: var(--space-3);
   }
+
+  @media (max-width: 640px) {
+    .post {
+      padding-top: var(--space-8);
+    }
+
+    .post__title {
+      font-size: var(--text-3xl);
+    }
+
+    .post__description {
+      font-size: var(--text-base);
+    }
+  }
 </style>
