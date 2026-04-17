@@ -5,16 +5,44 @@ import '../styles/prose.css';
 
 <BaseLayout title="소개 — Jacob.c" description="Jacob (ucpwang)에 대한 소개 페이지입니다.">
   <article class="container about">
-    <h1 class="about__title">소개</h1>
+    <header class="about__header">
+      <h1 class="about__name">Jacob</h1>
+      <p class="about__tagline">소프트웨어 엔지니어 · 기록하는 개발자</p>
+    </header>
+
     <div class="prose">
-      <p>안녕하세요, Jacob입니다.</p>
+      <h2>안녕하세요</h2>
       <p>
-        개발, 기술, 그리고 생각들을 이곳에 기록합니다.
-        <!--
-          Phase 4에서 내용 작성 예정.
-          자유롭게 수정하세요.
-        -->
+        저는 Jacob(ucpwang)입니다. 웹 개발과 시스템 설계에 관심이 많은 소프트웨어 엔지니어입니다.
+        좋은 도구를 만드는 것, 그리고 그 과정에서 배운 것을 기록하는 것을 좋아합니다.
       </p>
+
+      <h2>관심 분야</h2>
+      <ul>
+        <li><strong>프론트엔드</strong> — 성능, 접근성, 디자인 시스템</li>
+        <li><strong>개발 환경</strong> — CLI 도구, AI 협업, 자동화 파이프라인</li>
+        <li><strong>타이포그래피와 UI</strong> — 읽기 좋은 인터페이스 설계</li>
+      </ul>
+
+      <h2>이 블로그에 대해</h2>
+      <p>
+        이 블로그는 공부한 내용을 정리하고, 개발하면서 마주친 문제와 해결 과정을 기록하는
+        공간입니다. 완벽하지 않아도 일단 쓰고, 나중에 다듬는 방식으로 운영합니다.
+      </p>
+      <p>
+        기술 스택은 <strong>Astro</strong> + <strong>CSS Custom Properties</strong> 기반의 직접 설계한
+        디자인 시스템, 그리고 <strong>Claude Code</strong>와 함께 만들어가고 있습니다.
+      </p>
+
+      <h2>연락</h2>
+      <p>피드백이나 이야기 나누고 싶은 주제가 있다면 편하게 연락 주세요.</p>
+      <ul>
+        <li>
+          GitHub: <a href="https://github.com/ucpwang" target="_blank" rel="noopener noreferrer"
+            >@ucpwang</a>
+        </li>
+        <li>Email: <a href="mailto:ghkddbguse@gmail.com">ghkddbguse@gmail.com</a></li>
+      </ul>
     </div>
   </article>
 </BaseLayout>
@@ -25,8 +53,26 @@ import '../styles/prose.css';
     padding-bottom: var(--space-24);
   }
 
-  .about__title {
+  .about__header {
+    margin-bottom: var(--space-12);
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .about__name {
     font-size: var(--text-4xl);
-    margin-bottom: var(--space-8);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-2);
+  }
+
+  .about__tagline {
+    font-size: var(--text-base);
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 640px) {
+    .about__name {
+      font-size: var(--text-3xl);
+    }
   }
 </style>
