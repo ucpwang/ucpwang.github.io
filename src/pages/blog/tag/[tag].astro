@@ -1,0 +1,98 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PostCard from '../../../components/PostCard.astro';
+import { tagToSlug } from '../../../utils/tag';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+
+  const allTags = [...new Set(posts.flatMap((post) => post.data.tags))];
+
+  return allTags.map((tag) => ({
+    params: { tag: tagToSlug(tag) },
+    props: {
+      tag,
+      posts: posts
+        .filter((post) => post.data.tags.includes(tag))
+        .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()),
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout title={`#${tag} — Jacob.c`} description={`${tag} 태그가 붙은 포스트 목록입니다.`}>
+  <section class="container tag-page">
+    <header class="tag-page__header">
+      <a href="/blog" class="tag-page__back">← 블로그</a>
+      <h1 class="tag-page__title">
+        <span class="tag-page__hash">#</span>{tag}
+      </h1>
+      <p class="tag-page__count">{posts.length}개의 포스트</p>
+    </header>
+
+    <ul class="post-list">
+      {
+        posts.map((post) => (
+          <li>
+            <PostCard
+              title={post.data.title}
+              date={post.data.date}
+              description={post.data.description}
+              slug={post.slug}
+              tags={post.data.tags}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .tag-page {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-24);
+  }
+
+  .tag-page__header {
+    margin-bottom: var(--space-10);
+  }
+
+  .tag-page__back {
+    display: inline-block;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    margin-bottom: var(--space-4);
+    transition: color var(--transition-fast);
+  }
+
+  .tag-page__back:hover {
+    color: var(--color-text-primary);
+  }
+
+  .tag-page__title {
+    font-size: var(--text-4xl);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-2);
+  }
+
+  .tag-page__hash {
+    color: var(--color-brand);
+  }
+
+  .tag-page__count {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .post-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+</style>

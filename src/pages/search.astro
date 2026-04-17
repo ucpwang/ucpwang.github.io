@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="검색 — Jacob.c" description="블로그 포스트를 검색합니다.">
+  <div class="container search-page">
+    <h1 class="search-page__title">검색</h1>
+    <div id="search"></div>
+  </div>
+</BaseLayout>
+
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+<script src="/pagefind/pagefind-ui.js" is:inline></script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    // @ts-ignore
+    new PagefindUI({
+      element: '#search',
+      showImages: false,
+      resetStyles: false,
+    });
+  });
+</script>
+
+<style>
+  .search-page {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-24);
+  }
+
+  .search-page__title {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-8);
+  }
+
+  /* Pagefind UI 다크 테마 커스터마이즈 */
+  :global(#search) {
+    --pagefind-ui-scale: 1;
+    --pagefind-ui-primary: var(--color-brand);
+    --pagefind-ui-text: var(--color-text-primary);
+    --pagefind-ui-background: var(--color-bg-elevated);
+    --pagefind-ui-border: var(--color-border);
+    --pagefind-ui-tag: var(--color-bg-elevated);
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: 12px;
+    --pagefind-ui-font: var(--font-body);
+  }
+
+  :global(.pagefind-ui__search-input) {
+    background: var(--color-bg-elevated) !important;
+    color: var(--color-text-primary) !important;
+    border-color: var(--color-border) !important;
+  }
+
+  :global(.pagefind-ui__search-input:focus) {
+    border-color: var(--color-brand) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(192, 192, 192, 0.1) !important;
+  }
+
+  :global(.pagefind-ui__result) {
+    border-color: var(--color-border) !important;
+    background: var(--color-bg-elevated) !important;
+    border-radius: var(--radius-lg) !important;
+    padding: var(--space-5) !important;
+    margin-bottom: var(--space-3) !important;
+  }
+
+  :global(.pagefind-ui__result-title a) {
+    color: var(--color-text-primary) !important;
+    text-decoration: none !important;
+    font-weight: var(--font-semibold) !important;
+  }
+
+  :global(.pagefind-ui__result-title a:hover) {
+    color: var(--color-brand) !important;
+  }
+
+  :global(.pagefind-ui__result-excerpt) {
+    color: var(--color-text-secondary) !important;
+    font-size: var(--text-sm) !important;
+  }
+
+  :global(.pagefind-ui__result-excerpt mark) {
+    background: rgba(192, 192, 192, 0.15) !important;
+    color: var(--color-brand) !important;
+    border-radius: 3px !important;
+    padding: 0 2px !important;
+  }
+
+  :global(.pagefind-ui__message) {
+    color: var(--color-text-muted) !important;
+    font-size: var(--text-sm) !important;
+  }
+
+  :global(.pagefind-ui__search-clear) {
+    color: var(--color-text-muted) !important;
+  }
+</style>
