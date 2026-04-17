@@ -94,6 +94,35 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   :global(.pagefind-ui__search-clear) {
+    position: absolute !important;
+    right: var(--space-4) !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 20px !important;
+    height: 20px !important;
+    padding: 0 !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    color: transparent !important;
+    font-size: 0 !important;
+  }
+
+  :global(.pagefind-ui__search-clear::before) {
+    content: '×' !important;
+    font-size: 18px !important;
     color: var(--color-text-muted) !important;
+    line-height: 1 !important;
+    display: block !important;
+    text-align: center !important;
+    transition: color 0.15s ease !important;
+  }
+
+  :global(.pagefind-ui__search-clear:hover::before) {
+    color: var(--color-text-primary) !important;
+  }
+
+  :global(.pagefind-ui__form) {
+    position: relative !important;
   }
 </style>
