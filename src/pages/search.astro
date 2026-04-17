@@ -63,6 +63,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     --pagefind-ui-font: var(--font-body);
   }
 
+  :global(.pagefind-ui__search-input) {
+    color: var(--color-text-primary) !important;
+    background-color: var(--color-bg-elevated) !important;
+  }
+
   :global(.pagefind-ui__search-input:focus) {
     border-color: var(--color-brand) !important;
     outline: none !important;
