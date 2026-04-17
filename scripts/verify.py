@@ -6,8 +6,9 @@
 import urllib.request
 import sys
 import time
+import os
 
-BASE = "http://localhost:4321"
+BASE = os.environ.get("BASE", "http://localhost:4321")
 PASS = "\033[32m✓\033[0m"
 FAIL = "\033[31m✗\033[0m"
 results = []

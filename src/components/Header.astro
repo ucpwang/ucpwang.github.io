@@ -7,6 +7,9 @@ const navLinks = [
 ];
 
 const pathname = Astro.url.pathname;
+
+const isActive = (href: string) =>
+  href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href + '/');
 ---
 
 <header class="site-header">
@@ -19,7 +22,7 @@ const pathname = Astro.url.pathname;
             <li>
               <a
                 href={href}
-                class:list={['site-header__nav-link', { 'is-active': pathname === href }]}
+                class:list={['site-header__nav-link', { 'is-active': isActive(href) }]}
               >
                 {label}
               </a>
