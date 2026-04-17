@@ -20,9 +20,9 @@ const { title, description, image, pagefindIgnore } = Astro.props;
     <BaseHead title={title} description={description} image={image} />
     <slot name="head" />
   </head>
-  <body>
+  <body data-pagefind-ignore={pagefindIgnore ? 'all' : undefined}>
     <Header />
-    <main data-pagefind-ignore={pagefindIgnore ? 'all' : undefined}>
+    <main>
       <slot />
     </main>
     <Footer />
