@@ -3,16 +3,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="검색 — Jacob.c" description="블로그 포스트를 검색합니다.">
+  <link slot="head" href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+
   <div class="container search-page">
     <h1 class="search-page__title">검색</h1>
     <div id="search"></div>
   </div>
 </BaseLayout>
 
-<link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
-<script src="/pagefind/pagefind-ui.js" is:inline></script>
 <script>
-  window.addEventListener('DOMContentLoaded', () => {
+  // pagefind-ui.js를 동적으로 로드 후 초기화
+  const script = document.createElement('script');
+  script.src = '/pagefind/pagefind-ui.js';
+  script.onload = () => {
     // @ts-ignore
     new PagefindUI({
       element: '#search',
@@ -20,7 +23,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       resetStyles: false,
     });
 
-    // "비우기" 텍스트 → "×" 아이콘으로 교체
+    // "비우기" → "×" (위치는 pagefind CSS가 관리)
     const searchEl = document.getElementById('search');
     if (searchEl) {
       const observer = new MutationObserver(() => {
@@ -32,7 +35,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       });
       observer.observe(searchEl, { childList: true, subtree: true });
     }
-  });
+  };
+  document.head.appendChild(script);
 </script>
 
 <style>
@@ -46,12 +50,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     margin-bottom: var(--space-8);
   }
 
-  /* Pagefind UI 다크 테마 커스터마이즈 */
+  /* Pagefind UI 다크 테마 — CSS 변수로만 제어, 위치 관련 속성 일절 건드리지 않음 */
   :global(#search) {
     --pagefind-ui-scale: 1;
     --pagefind-ui-primary: var(--color-brand);
     --pagefind-ui-text: var(--color-text-primary);
-    --pagefind-ui-background: var(--color-bg-elevated);
+    --pagefind-ui-background: var(--color-bg-base);
     --pagefind-ui-border: var(--color-border);
     --pagefind-ui-tag: var(--color-bg-elevated);
     --pagefind-ui-border-width: 1px;
@@ -59,30 +63,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     --pagefind-ui-font: var(--font-body);
   }
 
-  :global(.pagefind-ui__search-input) {
-    background: var(--color-bg-elevated) !important;
-    color: var(--color-text-primary) !important;
-    border-color: var(--color-border) !important;
-  }
-
   :global(.pagefind-ui__search-input:focus) {
     border-color: var(--color-brand) !important;
     outline: none !important;
-    box-shadow: 0 0 0 2px rgba(192, 192, 192, 0.1) !important;
   }
 
   :global(.pagefind-ui__result) {
     border-color: var(--color-border) !important;
-    background: var(--color-bg-elevated) !important;
-    border-radius: var(--radius-lg) !important;
-    padding: var(--space-5) !important;
-    margin-bottom: var(--space-3) !important;
+    padding: var(--space-5) 0 !important;
   }
 
   :global(.pagefind-ui__result-title a) {
     color: var(--color-text-primary) !important;
     text-decoration: none !important;
     font-weight: var(--font-semibold) !important;
+    font-size: var(--text-lg) !important;
   }
 
   :global(.pagefind-ui__result-title a:hover) {
@@ -92,6 +87,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   :global(.pagefind-ui__result-excerpt) {
     color: var(--color-text-secondary) !important;
     font-size: var(--text-sm) !important;
+    margin-top: var(--space-2) !important;
   }
 
   :global(.pagefind-ui__result-excerpt mark) {
@@ -106,15 +102,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     font-size: var(--text-sm) !important;
   }
 
+  /* clear 버튼 — 색상만, 위치는 pagefind 기본값 */
   :global(.pagefind-ui__search-clear) {
-    background: none !important;
-    border: none !important;
-    cursor: pointer !important;
-    font-size: var(--text-sm) !important;
     color: var(--color-text-muted) !important;
-    padding: var(--space-1) var(--space-2) !important;
-    border-radius: var(--radius-sm) !important;
-    transition: color var(--transition-fast) !important;
+    background-color: var(--color-bg-base) !important;
+    font-size: var(--text-base) !important;
+    border: none !important;
   }
 
   :global(.pagefind-ui__search-clear:hover) {
