@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="검색 — Jacob.c" description="블로그 포스트를 검색합니다.">
+<BaseLayout title="검색 — Jacob.c" description="블로그 포스트를 검색합니다." pagefindIgnore={true}>
   <link slot="head" href="/pagefind/pagefind-ui.css" rel="stylesheet" />
 
   <div class="container search-page">
@@ -12,7 +12,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <script>
-  // pagefind-ui.js를 동적으로 로드 후 초기화
   const script = document.createElement('script');
   script.src = '/pagefind/pagefind-ui.js';
   script.onload = () => {
@@ -23,7 +22,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       resetStyles: false,
     });
 
-    // "비우기" → "×" (위치는 pagefind CSS가 관리)
+    // pagefind가 Svelte 스코프 선택자로 CSS 특이도를 높이므로,
+    // 다크 테마 색상을 JS로 직접 주입
+    const overrideStyle = document.createElement('style');
+    const s = getComputedStyle(document.documentElement);
+    const textPrimary = s.getPropertyValue('--color-text-primary').trim();
+    const bgElevated = s.getPropertyValue('--color-bg-elevated').trim();
+    const bgBase = s.getPropertyValue('--color-bg-base').trim();
+    const brand = s.getPropertyValue('--color-brand').trim();
+    const textMuted = s.getPropertyValue('--color-text-muted').trim();
+    overrideStyle.textContent = `
+      .pagefind-ui__search-input { color: ${textPrimary} !important; background-color: ${bgElevated} !important; }
+      .pagefind-ui__search-clear { color: ${textMuted} !important; background-color: ${bgBase} !important; border: none !important; }
+      .pagefind-ui__search-clear:hover { color: ${textPrimary} !important; }
+    `;
+    document.head.appendChild(overrideStyle);
+
+    // "비우기" → "×"
     const searchEl = document.getElementById('search');
     if (searchEl) {
       const observer = new MutationObserver(() => {
@@ -50,7 +65,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     margin-bottom: var(--space-8);
   }
 
-  /* Pagefind UI 다크 테마 — CSS 변수로만 제어, 위치 관련 속성 일절 건드리지 않음 */
+  /* Pagefind UI 다크 테마 CSS 변수 — 텍스트/배경색은 JS override로 처리 */
   :global(#search) {
     --pagefind-ui-scale: 1;
     --pagefind-ui-primary: var(--color-brand);
@@ -61,11 +76,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     --pagefind-ui-border-width: 1px;
     --pagefind-ui-border-radius: 12px;
     --pagefind-ui-font: var(--font-body);
-  }
-
-  :global(.pagefind-ui__search-input) {
-    color: var(--color-text-primary) !important;
-    background-color: var(--color-bg-elevated) !important;
   }
 
   :global(.pagefind-ui__search-input:focus) {
@@ -105,17 +115,5 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   :global(.pagefind-ui__message) {
     color: var(--color-text-muted) !important;
     font-size: var(--text-sm) !important;
-  }
-
-  /* clear 버튼 — 색상만, 위치는 pagefind 기본값 */
-  :global(.pagefind-ui__search-clear) {
-    color: var(--color-text-muted) !important;
-    background-color: var(--color-bg-base) !important;
-    font-size: var(--text-base) !important;
-    border: none !important;
-  }
-
-  :global(.pagefind-ui__search-clear:hover) {
-    color: var(--color-text-primary) !important;
   }
 </style>
