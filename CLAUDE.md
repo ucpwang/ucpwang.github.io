@@ -25,6 +25,8 @@ ucpwang.github.io/
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml             # Astro 빌드 → GitHub Pages 배포
+├── scripts/
+│   └── verify.py                  # 전체 기능 검증 체크리스트 (배포 전 필수 실행)
 ├── src/
 │   ├── components/
 │   │   ├── BaseHead.astro         # <head> 공통 (메타, 폰트, CSS 임포트)
@@ -40,15 +42,21 @@ ucpwang.github.io/
 │   │   └── PostLayout.astro       # 블로그 포스트 레이아웃
 │   ├── pages/
 │   │   ├── index.astro            # 홈 (최신 포스트 목록)
-│   │   ├── blog/
-│   │   │   ├── index.astro        # 전체 포스트 목록
-│   │   │   └── [...slug].astro    # 개별 포스트 렌더링
-│   │   └── about.astro            # 소개 페이지
+│   │   ├── search.astro           # 전문 검색 (Pagefind)
+│   │   ├── about.astro            # 소개 페이지
+│   │   └── blog/
+│   │       ├── index.astro        # 전체 포스트 목록 + 태그 클라우드
+│   │       ├── [...slug].astro    # 개별 포스트 렌더링
+│   │       └── tag/
+│   │           └── [tag].astro    # 태그별 필터링 페이지
+│   ├── utils/
+│   │   └── tag.ts                 # 태그 슬러그 변환 유틸 (tagToSlug, slugToTag)
 │   └── styles/
 │       ├── tokens.css             # 디자인 토큰 → CSS 변수 (여기서만 값 정의)
 │       ├── global.css             # 리셋 + 글로벌 타이포그래피
 │       └── prose.css              # 마크다운 본문 스타일
 ├── public/
+│   ├── favicon.svg                # 사이트 파비콘
 │   └── images/                    # 정적 이미지
 ├── design-tokens/
 │   └── tokens.json                # 디자인 토큰 단일 소스 (tokens.css와 동기화)
@@ -89,6 +97,7 @@ margin-top: var(--space-6);
 ### 3. 사용 가능한 토큰 목록
 
 **Color**
+
 ```
 --color-brand           브랜드 메인 색상
 --color-brand-light     브랜드 밝은 변형
@@ -104,6 +113,7 @@ margin-top: var(--space-6);
 ```
 
 **Typography**
+
 ```
 --font-heading          제목용 폰트 패밀리
 --font-body             본문용 폰트 패밀리
@@ -115,6 +125,7 @@ margin-top: var(--space-6);
 ```
 
 **Spacing**
+
 ```
 --space-1   0.25rem    --space-2   0.5rem
 --space-3   0.75rem    --space-4   1rem
@@ -124,6 +135,7 @@ margin-top: var(--space-6);
 ```
 
 **Other**
+
 ```
 --radius-sm  --radius-md  --radius-lg  --radius-full
 --shadow-sm  --shadow-md  --shadow-lg
@@ -211,13 +223,13 @@ draft: false
 
 ### 2. Content Collections 스키마 (필수 필드)
 
-| 필드 | 타입 | 필수 | 설명 |
-|------|------|------|------|
-| `title` | string | ✅ | 포스트 제목 |
-| `date` | date | ✅ | 발행일 (YYYY-MM-DD) |
-| `description` | string | ✅ | 요약문 |
-| `tags` | string[] | - | 태그 목록 (기본값 `[]`) |
-| `draft` | boolean | - | `true`면 빌드에서 제외 (기본값 `false`) |
+| 필드          | 타입     | 필수 | 설명                                    |
+| ------------- | -------- | ---- | --------------------------------------- |
+| `title`       | string   | ✅   | 포스트 제목                             |
+| `date`        | date     | ✅   | 발행일 (YYYY-MM-DD)                     |
+| `description` | string   | ✅   | 요약문                                  |
+| `tags`        | string[] | -    | 태그 목록 (기본값 `[]`)                 |
+| `draft`       | boolean  | -    | `true`면 빌드에서 제외 (기본값 `false`) |
 
 ### 3. 확인
 
@@ -231,16 +243,34 @@ npm run dev  # http://localhost:4321/blog 에서 확인
 
 ```bash
 npm run dev      # 개발 서버 시작 (http://localhost:4321)
-npm run build    # 프로덕션 빌드 → dist/
-npm run preview  # 빌드 결과물 미리보기
+npm run build    # 프로덕션 빌드 → dist/ (pagefind 인덱싱 포함)
+npm run preview  # 빌드 결과물 미리보기 (http://localhost:4321)
 npm run format   # prettier로 전체 파일 포맷
 ```
+
+---
+
+## 배포 전 검증 루프 (필수)
+
+**어떤 기능을 추가/수정하든 배포 전에 반드시 검증 루프를 완료해야 합니다.**
+
+```bash
+npm run build && npm run preview -- --port 4321 &
+sleep 3
+python3 scripts/verify.py
+kill %1
+```
+
+- `47/47 전체 통과`가 확인된 후에만 커밋·배포한다
+- 실패 항목이 있으면 수정 → 재빌드 → 재검증 반복
+- 검증 스크립트(`scripts/verify.py`)는 전체 기능을 커버하며, 새 기능 추가 시 해당 체크 항목도 함께 추가한다
 
 ---
 
 ## 배포
 
 **자동 배포**: `master` 브랜치에 push하면 GitHub Actions가 자동으로:
+
 1. `npm ci` → `npm run build` 실행
 2. `dist/` 디렉토리를 GitHub Pages에 배포
 
@@ -266,3 +296,6 @@ npm run format   # prettier로 전체 파일 포맷
 - `archive/` 디렉토리는 구 포스트 보존용 — 수정하지 말 것
 - `jacobs_mac_house/` 디렉토리는 구 포트폴리오 — 건드리지 말 것
 - `node_modules/`, `dist/`, `bower_components/`는 gitignore됨 — 커밋하지 말 것
+- 태그 URL은 반드시 `tagToSlug()` (`src/utils/tag.ts`) 를 통해 생성 — 슬래시·공백 포함 태그(CI/CD 등) 대응
+- 검색 페이지(`search.astro`)는 pagefind 인덱싱 대상 제외 필수 (`pagefindIgnore={true}`)
+- 외부 라이브러리 CSS가 Svelte 스코프 선택자로 특이도를 높이는 경우, `!important` 대신 JS에서 런타임 style 주입 방식을 사용
