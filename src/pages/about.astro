@@ -1,49 +1,138 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import '../styles/prose.css';
 ---
 
-<BaseLayout title="소개 — Jacob.c" description="Jacob (ucpwang)에 대한 소개 페이지입니다.">
+<BaseLayout title="소개 — Jacob.c" description="황유현(Jacob) — CISO, 개발자 출신 정보보호 리더">
   <article class="container about">
-    <header class="about__header">
-      <h1 class="about__name">Jacob</h1>
-      <p class="about__tagline">소프트웨어 엔지니어 · 기록하는 개발자</p>
+    <!-- ① Hero -->
+    <header class="about__hero">
+      <p class="about__role">CISO · 디케이테크인</p>
+      <h1 class="about__name">황유현</h1>
+      <p class="about__tagline">서비스를 만들어 본 사람의 보안은 다릅니다</p>
+      <p class="about__desc">
+        코드와 인프라를 직접 다뤄온 경험 위에 정책을 설계하고, 컴플라이언스 요건을 기술적으로
+        구현하여 실효성 있는 보안 체계를 만들어 갑니다.
+      </p>
     </header>
 
-    <div class="prose">
-      <h2>안녕하세요</h2>
-      <p>
-        저는 Jacob(ucpwang)입니다. 웹 개발과 시스템 설계에 관심이 많은 소프트웨어 엔지니어입니다.
-        좋은 도구를 만드는 것, 그리고 그 과정에서 배운 것을 기록하는 것을 좋아합니다.
+    <!-- ② 커리어 여정 -->
+    <section class="about__section">
+      <h2 class="about__section-title">커리어 여정</h2>
+      <p class="about__section-desc">
+        개발·기술전략·정보보호, 세 영역을 순서대로 깊게 밟아온 경험이 지금의 시각을 만들었습니다.
       </p>
-
-      <h2>관심 분야</h2>
-      <ul>
-        <li><strong>프론트엔드</strong> — 성능, 접근성, 디자인 시스템</li>
-        <li><strong>개발 환경</strong> — CLI 도구, AI 협업, 자동화 파이프라인</li>
-        <li><strong>타이포그래피와 UI</strong> — 읽기 좋은 인터페이스 설계</li>
-      </ul>
-
-      <h2>이 블로그에 대해</h2>
-      <p>
-        이 블로그는 공부한 내용을 정리하고, 개발하면서 마주친 문제와 해결 과정을 기록하는
-        공간입니다. 완벽하지 않아도 일단 쓰고, 나중에 다듬는 방식으로 운영합니다.
-      </p>
-      <p>
-        기술 스택은 <strong>Astro</strong> + <strong>CSS Custom Properties</strong> 기반의 직접 설계한
-        디자인 시스템, 그리고 <strong>Claude Code</strong>와 함께 만들어가고 있습니다.
-      </p>
-
-      <h2>연락</h2>
-      <p>피드백이나 이야기 나누고 싶은 주제가 있다면 편하게 연락 주세요.</p>
-      <ul>
-        <li>
-          GitHub: <a href="https://github.com/ucpwang" target="_blank" rel="noopener noreferrer"
-            >@ucpwang</a>
+      <ol class="timeline">
+        <li class="timeline__item">
+          <div class="timeline__period">2011 — 2018</div>
+          <div class="timeline__content">
+            <h3 class="timeline__title">개발</h3>
+            <p class="timeline__body">
+              Java · Spring Boot · MSA · TDD · API 설계. 크루메이트에서 SSG.com 통합몰 개발을
+              시작으로 다음서비스에서 커머스 플랫폼과 사내 공통 개발킷 설계, 12개 프로젝트를 PL로
+              리딩했습니다. 코드가 실제 서비스에 닿는 방식을 직접 익힌 시기입니다.
+            </p>
+          </div>
         </li>
-        <li>Email: <a href="mailto:ghkddbguse@gmail.com">ghkddbguse@gmail.com</a></li>
+        <li class="timeline__item">
+          <div class="timeline__period">2018 — 2023</div>
+          <div class="timeline__content">
+            <h3 class="timeline__title">기술전략</h3>
+            <p class="timeline__body">
+              클라우드(Kakao Cloud, AWS) 마이그레이션 전략 수립, MSA 아키텍처 정의, Docker·
+              Kubernetes 표준화, CI/CD 파이프라인 고도화. 조직의 기술 방향을 설계하고 팀 구성원을
+              멘토링하는 역할로 확장되었습니다.
+            </p>
+          </div>
+        </li>
+        <li class="timeline__item timeline__item--current">
+          <div class="timeline__period">2024 — 현재</div>
+          <div class="timeline__content">
+            <h3 class="timeline__title">정보보호</h3>
+            <p class="timeline__body">
+              ISMS-P · ISO 27001/27701/27017/27018 다중 인증 획득, 클라우드 보안 아키텍처 설계,
+              방화벽·VPN·KMS·DLP 등 보안 인프라 구축. 정책과 기술을 함께 다루며 2026년부터 CISO로
+              거버넌스 체계 전반을 책임지고 있습니다.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ③ 지금 다루는 일들 -->
+    <section class="about__section">
+      <h2 class="about__section-title">지금 다루는 일들</h2>
+      <ul class="interest-grid">
+        <li class="interest-card">
+          <h3 class="interest-card__title">정보보호 거버넌스</h3>
+          <p class="interest-card__body">
+            보안 정책·기준 체계 수립, ISMS-P·ISO 27K 컴플라이언스 운영, 위험 관리 및 외부 규제기관
+            대응.
+          </p>
+        </li>
+        <li class="interest-card">
+          <h3 class="interest-card__title">클라우드 보안 아키텍처</h3>
+          <p class="interest-card__body">
+            Kakao Cloud · AWS 환경 보안 기준 설계, 인프라 이관 단계별 보안 요구사항 정의,
+            제로트러스트 접근 모델 검토.
+          </p>
+        </li>
+        <li class="interest-card">
+          <h3 class="interest-card__title">개발 · 자동화 · 품질</h3>
+          <p class="interest-card__body">
+            MSA · CI/CD · SonarQube · 코딩 컨벤션. 보안이 개발 파이프라인 안으로 들어오는 DevSecOps
+            방향에 관심이 많습니다.
+          </p>
+        </li>
+        <li class="interest-card">
+          <h3 class="interest-card__title">기술 조직 문화</h3>
+          <p class="interest-card__body">
+            주니어 멘토링, 온보딩 프로세스 설계, 정보보호 인식 제고 교육. 사람이 바뀌어야 보안이
+            작동한다고 믿습니다.
+          </p>
+        </li>
       </ul>
-    </div>
+    </section>
+
+    <!-- ④ 이 블로그 -->
+    <section class="about__section">
+      <h2 class="about__section-title">이 블로그</h2>
+      <p>
+        개발자로 시작해 기술전략가를 거쳐 CISO가 된 사람의 기록 공간입니다. 보안을 기술과 거버넌스
+        양쪽에서 바라보는 시각, 클라우드와 MSA를 다루며 쌓아온 실전 경험, 그리고 조직을 운영하면서
+        만난 크고 작은 문제들을 씁니다.
+      </p>
+      <p>
+        완벽하지 않아도 일단 쓰고, 나중에 다듬는 방식으로 운영합니다. 블로그 자체는 <strong
+          >Astro</strong
+        > + 직접 설계한 디자인 시스템, 그리고 <strong>Claude Code</strong>와 함께 만들어가고
+        있습니다.
+      </p>
+    </section>
+
+    <!-- ⑤ 연락 -->
+    <section class="about__section about__contact">
+      <h2 class="about__section-title">연락</h2>
+      <p>피드백이나 이야기 나누고 싶은 주제가 있다면 편하게 연락 주세요.</p>
+      <ul class="contact-list">
+        <li>
+          <a
+            href="https://github.com/ucpwang"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="contact-link"
+          >
+            <span class="contact-link__label">GitHub</span>
+            <span class="contact-link__value">@ucpwang</span>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:ghkddbguse@gmail.com" class="contact-link">
+            <span class="contact-link__label">Email</span>
+            <span class="contact-link__value">ghkddbguse@gmail.com</span>
+          </a>
+        </li>
+      </ul>
+    </section>
   </article>
 </BaseLayout>
 
@@ -51,28 +140,232 @@ import '../styles/prose.css';
   .about {
     padding-top: var(--space-12);
     padding-bottom: var(--space-24);
+    max-width: 720px;
   }
 
-  .about__header {
+  /* ── Hero ───────────────────────────────────── */
+  .about__hero {
+    padding-bottom: var(--space-12);
     margin-bottom: var(--space-12);
-    padding-bottom: var(--space-8);
     border-bottom: 1px solid var(--color-border);
+  }
+
+  .about__role {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-brand);
+    letter-spacing: 0.04em;
+    margin-bottom: var(--space-2);
   }
 
   .about__name {
     font-size: var(--text-4xl);
     letter-spacing: -0.02em;
-    margin-bottom: var(--space-2);
+    margin-bottom: var(--space-4);
   }
 
   .about__tagline {
-    font-size: var(--text-base);
-    color: var(--color-text-muted);
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-4);
   }
 
+  .about__desc {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ── Section 공통 ────────────────────────────── */
+  .about__section {
+    margin-bottom: var(--space-12);
+    padding-bottom: var(--space-12);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .about__section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .about__section-title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-4);
+  }
+
+  .about__section-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-8);
+    line-height: var(--leading-normal);
+  }
+
+  .about__section p {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-4);
+  }
+
+  .about__section p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ── 커리어 타임라인 ─────────────────────────── */
+  .timeline {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .timeline__item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: var(--space-6);
+    padding: var(--space-6) 0;
+    border-top: 1px solid var(--color-border);
+    position: relative;
+  }
+
+  .timeline__item::before {
+    content: '';
+    position: absolute;
+    left: 112px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--color-border);
+  }
+
+  .timeline__item:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .timeline__period {
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    color: var(--color-text-muted);
+    padding-top: var(--space-1);
+    line-height: var(--leading-tight);
+  }
+
+  .timeline__item--current .timeline__period {
+    color: var(--color-brand);
+  }
+
+  .timeline__title {
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .timeline__item--current .timeline__title {
+    color: var(--color-brand);
+  }
+
+  .timeline__body {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ── 관심 영역 그리드 ────────────────────────── */
+  .interest-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+
+  .interest-card {
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+  }
+
+  .interest-card__title {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .interest-card__body {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ── 연락 ────────────────────────────────────── */
+  .contact-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--transition-fast);
+  }
+
+  .contact-link:hover {
+    color: var(--color-brand);
+  }
+
+  .contact-link__label {
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    width: 52px;
+  }
+
+  .contact-link__value {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    transition: color var(--transition-fast);
+  }
+
+  .contact-link:hover .contact-link__value {
+    color: var(--color-brand);
+  }
+
+  /* ── 반응형 ──────────────────────────────────── */
   @media (max-width: 640px) {
     .about__name {
       font-size: var(--text-3xl);
+    }
+
+    .about__tagline {
+      font-size: var(--text-lg);
+    }
+
+    .timeline__item {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+
+    .timeline__item::before {
+      display: none;
+    }
+
+    .interest-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>

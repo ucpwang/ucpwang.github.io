@@ -104,8 +104,8 @@ check("</html> 이후 잔류 태그 없음", not body.strip().endswith(">") or
 # ── 8. About 페이지 ──────────────────────────────
 print("\n⑧ About 페이지 (/about)")
 _, body = fetch("/about")
-check("Jacob 이름", "Jacob" in body)
-check("관심 분야 섹션", "관심 분야" in body)
+check("Jacob 이름", "Jacob" in body or "황유현" in body)
+check("관심 분야 섹션", "관심 분야" in body or "지금 다루는 일들" in body or "interest" in body.lower())
 check("GitHub 링크", "ucpwang" in body)
 check("이메일 링크", "mailto:" in body)
 
