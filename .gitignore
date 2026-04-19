@@ -20,3 +20,15 @@ npm-debug.log
 bower_components
 dist
 .astro
+
+# 환경변수
+.env
+.env.local
+.env.*.local
+
+# AI 참조 자료 (CLAUDE.md 2장 — 빌드 미포함)
+references/
+
+# iCloud Drive 동기화 충돌 잔재 (" 2" 접미사 중복 파일)
+* 2
+* 2.*
