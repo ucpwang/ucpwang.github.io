@@ -10,7 +10,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "astro": "^4.16.0"
+    "astro": "^5.18.1"
   },
   "devDependencies": {
     "pagefind": "^1.5.2",
