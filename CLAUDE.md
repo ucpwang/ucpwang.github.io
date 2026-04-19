@@ -60,7 +60,6 @@ ucpwang.github.io/
 │   └── images/                    # 정적 이미지
 ├── design-tokens/
 │   └── tokens.json                # 디자인 토큰 단일 소스 (tokens.css와 동기화)
-├── archive/                       # 구 Strapdown.js 포스트 (참조용 보존)
 ├── astro.config.mjs
 ├── package.json
 ├── tsconfig.json
@@ -293,7 +292,6 @@ kill %1
 - `design-tokens/tokens.json`을 수정할 때는 `src/styles/tokens.css`도 동기화
 - `src/styles/tokens.css`에서만 CSS 변수 값을 정의 — 다른 파일에서 값 정의 금지
 - `public/` 디렉토리는 그대로 서빙됨 (빌드 과정 없음)
-- `archive/` 디렉토리는 구 포스트 보존용 — 수정하지 말 것
 - `jacobs_mac_house/` 디렉토리는 구 포트폴리오 — 건드리지 말 것
 - `node_modules/`, `dist/`, `bower_components/`는 gitignore됨 — 커밋하지 말 것
 - 태그 URL은 반드시 `tagToSlug()` (`src/utils/tag.ts`) 를 통해 생성 — 슬래시·공백 포함 태그(CI/CD 등) 대응
