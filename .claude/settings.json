@@ -20,7 +20,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '.tool_input.file_path // empty' | { read -r f; [ -n \"$f\" ] && cd /home/user/ucpwang.github.io && npx prettier --write \"$f\" --log-level silent; } 2>/dev/null || true"
+            "command": "jq -r '.tool_input.file_path // empty' | { read -r f; [ -n \"$f\" ] && cd \"$CLAUDE_PROJECT_DIR\" && npx prettier --write \"$f\" --log-level silent; } 2>/dev/null || true"
           }
         ]
       }
