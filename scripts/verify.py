@@ -106,7 +106,7 @@ print("\n⑧ About 페이지 (/about)")
 _, body = fetch("/about")
 check("Jacob 이름", "Jacob" in body or "황유현" in body)
 check("관심 분야 섹션", "관심 분야" in body or "지금 다루는 일들" in body or "interest" in body.lower())
-check("GitHub 링크", "ucpwang" in body)
+check("LinkedIn 링크", "linkedin.com" in body)
 check("이메일 링크", "mailto:" in body)
 
 # ── 9. 다크 테마 CSS 변수 ────────────────────────
