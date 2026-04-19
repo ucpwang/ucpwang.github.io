@@ -30,6 +30,10 @@ npm run format   # prettier 일괄 포맷
 - [ ] **Astro v6 마이그레이션** — `astro.config.mjs`의 `legacy.collectionsBackwardsCompat` 플래그 제거. `src/content/config.ts`를 `src/content.config.ts`로 이동하고 모든 콜렉션을 Content Layer API(`loader: glob(...)`)로 전환. v6에서 legacy 지원이 제거되므로 사전 작업 필요
 - [ ] **GitHub Actions Node 24 대비** — `.github/workflows/deploy.yml`의 `actions/checkout@v4`, `actions/setup-node@v4`, `actions/upload-pages-artifact@v3`, `actions/deploy-pages@v4`, `actions/upload-artifact@v4`가 Node 20 사용. 2026-06-02부터 Node 24 기본, 2026-09-16에 Node 20 제거. 각 액션의 최신 버전 점검·업데이트 필요
 
+### 개발 워크플로우
+
+- [ ] **원격 환경 Slack 전송 구조 개선** — 원격 접속 상태(Claude Code on the web 등)에서도 Slack 메시지·이미지 캡처본 전송이 가능하도록 파이프라인 구축. 목적: 스크린샷 등 결과물을 메신저로 즉시 공유해 원격 피드백 루프 확보. Slack MCP 서버 설정, Bot Token/Team ID 환경변수 주입 경로, 이미지 업로드(`files.upload`) 권한 스코프 설계 포함
+
 ## 라이선스
 
 콘텐츠와 코드는 별도 라이선스 명시 전까지 저자 보유.
