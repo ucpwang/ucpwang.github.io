@@ -10,7 +10,10 @@
       "Bash(git push *)",
       "Bash(git status)",
       "Bash(git diff *)",
-      "Bash(git log *)"
+      "Bash(git log *)",
+      "Bash(python3 scripts/verify.py)",
+      "Bash(curl -fsS http://localhost:4321*)",
+      "Bash(lsof -i :4321)"
     ]
   },
   "hooks": {
